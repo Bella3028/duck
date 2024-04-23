@@ -68,6 +68,32 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 let bogey: Sprite = null
 let dart1: Sprite = null
 let player1: Sprite = null
+effects.bubbles.startScreenEffect()
+player1 = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . c c c c . . . . . . . . 
+    . . . c d d d d c c . . . . . . 
+    . . . c d c c c c c c . . . . . 
+    . . . c c d 4 4 4 4 c c . . . . 
+    c c . c 1 4 4 4 4 4 d 4 c . . . 
+    c 4 c 1 d 4 4 4 4 1 4 4 4 c . . 
+    c 4 c 1 4 4 4 4 4 1 4 4 4 4 c . 
+    f 4 4 1 4 4 4 4 4 1 4 4 4 4 4 f 
+    f 4 f 1 4 4 4 c c 1 4 f 4 4 4 f 
+    f 4 f d 4 4 f 4 4 1 4 4 4 4 4 f 
+    f f f f d 4 f 4 c 1 4 4 4 4 f . 
+    . . c f c 4 f f 4 4 d 4 f f . . 
+    . . c b d c 4 4 4 4 f f . . . . 
+    . . c d d d f f f f . . . . . . 
+    . . . c c c . . . . . . . . . . 
+    `, SpriteKind.Player)
+player1.setPosition(20, 15)
+player1.setFlag(SpriteFlag.StayInScreen, true)
+controller.moveSprite(player1, 200, 200)
+info.player1.setLife(3)
+info.player1.setScore(0)
+music.play(music.stringPlayable("G B A G C5 B A B ", 135), music.PlaybackMode.LoopingInBackground)
+game.setGameOverScoringType(game.ScoringType.HighScore)
 scene.setBackgroundImage(img`
     8fffffffffffffffffffffffff88fffff88ffff8998889999999989988888989999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     ffffffffffffffffffffffffff8fffff88ff9f88889889999999989998888898999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -190,55 +216,27 @@ scene.setBackgroundImage(img`
     6cccccccccccccc66666ccccccccccccccccccc6666cccc6644bccccccccccccc8666666666666f66666ffffffff666666666666666666ccccccccccccccccccccccccccccccccccccccccccccccccc8
     6cccccccccccccc66666ccccccccccccccccccc666ccccc6666ccccccccccccccf666666666666ff6666ffffffff6666666666666666666ccccccccccccccc6cccccccccccccccccccccccccccccccc8
     `)
-effects.bubbles.startScreenEffect()
-player1 = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . c c c c . . . . . . . . 
-    . . . c d d d d c c . . . . . . 
-    . . . c d c c c c c c . . . . . 
-    . . . c c d 4 4 4 4 c c . . . . 
-    c c . c 1 4 4 4 4 4 d 4 c . . . 
-    c 4 c 1 d 4 4 4 4 1 4 4 4 c . . 
-    c 4 c 1 4 4 4 4 4 1 4 4 4 4 c . 
-    f 4 4 1 4 4 4 4 4 1 4 4 4 4 4 f 
-    f 4 f 1 4 4 4 c c 1 4 f 4 4 4 f 
-    f 4 f d 4 4 f 4 4 1 4 4 4 4 4 f 
-    f f f f d 4 f 4 c 1 4 4 4 4 f . 
-    . . c f c 4 f f 4 4 d 4 f f . . 
-    . . c b d c 4 4 4 4 f f . . . . 
-    . . c d d d f f f f . . . . . . 
-    . . . c c c . . . . . . . . . . 
-    `, SpriteKind.Player)
-player1.setPosition(20, 15)
-player1.setFlag(SpriteFlag.StayInScreen, true)
-controller.moveSprite(player1, 200, 200)
-info.player1.setLife(3)
-info.player1.setScore(0)
-music.play(music.stringPlayable("G B A G C5 B A B ", 135), music.PlaybackMode.LoopingInBackground)
-game.setGameOverScoringType(game.ScoringType.HighScore)
 game.onUpdateInterval(500, function () {
     if (true) {
         bogey = sprites.create(img`
             . . . b 5 b . . . . . . . . . . 
             . . . . b 5 b . . . . . . . . . 
-            . . . . . c b . . . . . . . . . 
             . . . . b b b b b b . . . . . . 
             . . . b 5 5 5 5 5 b b . . . . . 
-            . . f d 5 5 f 1 d 5 b b . . . . 
-            . . c 4 d 5 f f 1 5 5 b . . . . 
-            . . 4 4 d d b f d 5 5 b . . . . 
-            b 4 4 4 4 4 5 5 5 d b b d d d b 
-            . b 4 4 4 4 4 5 5 b 5 5 5 d b b 
-            . . b 5 5 5 5 5 d 5 5 5 5 c d b 
-            . b 5 5 5 5 5 5 b 5 5 d c d d c 
-            . b 5 5 5 5 5 5 5 b c c d d b c 
-            . b d 5 5 5 5 5 d d d d d d c . 
-            . . b b 5 5 5 d d d d d b c . . 
-            . . . b b c c c c c c c c . . . 
+            . . c 4 d 5 f 1 d 5 b b . . . . 
+            b 4 4 4 d d f f 1 5 5 b . . . . 
+            . b 4 4 4 4 b f d 5 5 b . . . . 
+            . . b 4 4 4 4 5 5 5 5 d b . . . 
+            . . b 5 5 5 5 5 5 5 d d d b b . 
+            . b 5 5 5 5 5 5 5 b b b d d d b 
+            . b 5 5 5 5 5 5 c d 5 5 b d d c 
+            . b 5 5 5 5 5 5 d c d 5 d b b c 
+            . b 5 5 5 5 5 5 d d c b 5 5 b c 
+            . b d 5 5 5 5 5 d d d c c c b b 
+            . . b b 5 5 5 d d d c c . . . . 
+            . . . b b c c c c c . . . . . . 
             `, SpriteKind.Enemy)
         bogey.setVelocity(-50, 0)
         bogey.setPosition(180, randint(0, 120))
-    } else {
-    	
     }
 })
