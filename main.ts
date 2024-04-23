@@ -21,7 +21,6 @@ controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Press
     }
 })
 info.player1.onLifeZero(function () {
-    game.showLongText("You Lose...", DialogLayout.Bottom)
     game.over(false)
     game.setDialogTextColor(9)
     game.setDialogFrame(img`
